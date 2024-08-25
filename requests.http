@@ -1,0 +1,36 @@
+@token = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI0MDA3NjE1LCJpYXQiOjE3MjQwMDczMTUsImp0aSI6IjAzNmM5YTE3ZjVlNjRiZTRiYjA2ZWMwYWZmZDNjOGE5IiwidXNlcl9pZCI6MX0.Jl7qi54ZB48fkNeUPawGBUSg7wW8HvMn6W-lVEPfDnk
+@base_url = http://127.0.0.1:8000
+
+
+###
+PATCH {{base_url}}/users/2/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "Demian cracked the shit"
+}
+
+###
+PATCH {{base_url}}/users/1/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "name": "Demian"
+}
+
+
+###
+DELETE {{base_url}}/users/2/
+Authorization: {{token}}
+
+
+###
+POST {{base_url}}/token/
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
