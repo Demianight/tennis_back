@@ -1,10 +1,10 @@
 from rest_framework.routers import SimpleRouter
-from .views import UserViewSet, PlayerViewSet
 from django.urls import path, include
+from .views import MatchViewSet
 
 router = SimpleRouter()
-router.register("users", UserViewSet, "users")
-router.register("players", PlayerViewSet, "players")
+
+router.register("matches", MatchViewSet, "matches")
 
 urlpatterns = [
     path("", include(router.urls)),

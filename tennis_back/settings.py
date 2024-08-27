@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "users",
-    "auth",
+    "tokens",
+    "tournaments",
+    "matches",
     "drf_spectacular",
 ]
 

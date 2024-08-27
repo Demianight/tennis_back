@@ -10,6 +10,8 @@ urlpatterns = [
         name="swagger-ui",
     ),
     path("", include("users.urls")),
-    path("", include("auth.urls")),
+    path("", include("tokens.urls")),
+    path("", include("tournaments.urls")),
+    path("", include("matches.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
 ]
