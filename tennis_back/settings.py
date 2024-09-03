@@ -14,7 +14,7 @@ DEBUG = env("DEBUG")
 
 SECRET_KEY = env("SECRET_KEY")
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS: list[str] = ["194.67.88.231", "localhost", "127.0.0.1"]
 
 
 AUTH_USER_MODEL = "users.User"
