@@ -9,14 +9,14 @@ def create_next_match(sender, instance: Match, **kwargs):
     actual_round = instance.round_number + (
         1 if instance.round_number % 2 else -1
     )
-    previous_match2 = Match.objects.filter(
+    pair_match = Match.objects.filter(
         tournament=instance.tournament,
         round_number=actual_round,
     ).first()
-    if previous_match2 and instance.winner and previous_match2.winner:
+    if pair_match and instance.winner and pair_match.winner:
         Match.objects.get_or_create(
             tournament=instance.tournament,
             player1=instance.winner,
-            player2=previous_match2.winner,
+            player2=pair_match.winner,
             round_number=(actual_round - 1) // 2,
         )

@@ -3,14 +3,456 @@ info:
   title: ''
   version: 0.0.0
 paths:
-  /api/api/token/:
+  /games/:
+    get:
+      operationId: games_list
+      tags:
+      - games
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+          description: ''
+  /games/{id}/:
+    get:
+      operationId: games_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Гейм.
+        required: true
+      tags:
+      - games
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+  /matches/:
+    get:
+      operationId: matches_list
+      tags:
+      - matches
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Match'
+          description: ''
+  /matches/{id}/:
+    get:
+      operationId: matches_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this match.
+        required: true
+      tags:
+      - matches
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Match'
+          description: ''
+  /participations/:
+    get:
+      operationId: participations_list
+      tags:
+      - participations
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TournamentParticipation'
+          description: ''
+  /participations/{id}/:
+    get:
+      operationId: participations_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tournament participation.
+        required: true
+      tags:
+      - participations
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TournamentParticipation'
+          description: ''
+  /players/:
+    get:
+      operationId: players_list
+      tags:
+      - players
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Player'
+          description: ''
     post:
-      operationId: api_token_create
+      operationId: players_create
+      tags:
+      - players
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Player'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Player'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+  /players/{id}/:
+    get:
+      operationId: players_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this player.
+        required: true
+      tags:
+      - players
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+    put:
+      operationId: players_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this player.
+        required: true
+      tags:
+      - players
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Player'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Player'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+    patch:
+      operationId: players_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this player.
+        required: true
+      tags:
+      - players
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPlayer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPlayer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPlayer'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Player'
+          description: ''
+    delete:
+      operationId: players_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this player.
+        required: true
+      tags:
+      - players
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /sets/:
+    get:
+      operationId: sets_list
+      tags:
+      - sets
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Set'
+          description: ''
+  /sets/{id}/:
+    get:
+      operationId: sets_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Сет.
+        required: true
+      tags:
+      - sets
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Set'
+          description: ''
+  /token/:
+    post:
+      operationId: token_create
       description: |-
         Takes a set of user credentials and returns an access and refresh JSON web
         token pair to prove the authentication of those credentials.
       tags:
-      - api
+      - token
       requestBody:
         content:
           application/json:
@@ -30,14 +472,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenObtainPair'
           description: ''
-  /api/api/token/refresh/:
+  /token/refresh/:
     post:
-      operationId: api_token_refresh_create
+      operationId: token_refresh_create
       description: |-
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - api
+      - token
       requestBody:
         content:
           application/json:
@@ -57,14 +499,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenRefresh'
           description: ''
-  /api/users/:
+  /tournaments/:
+    get:
+      operationId: tournaments_list
+      tags:
+      - tournaments
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tournament'
+          description: ''
+  /tournaments/{id}/:
+    get:
+      operationId: tournaments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this tournament.
+        required: true
+      tags:
+      - tournaments
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tournament'
+          description: ''
+  /users/:
     get:
       operationId: users_list
       tags:
       - users
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -92,7 +572,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '201':
           content:
@@ -100,7 +579,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
-  /api/users/{id}/:
+  /users/{id}/:
     get:
       operationId: users_retrieve
       parameters:
@@ -114,7 +593,6 @@ paths:
       - users
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -147,7 +625,6 @@ paths:
         required: true
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -179,7 +656,6 @@ paths:
               $ref: '#/components/schemas/PatchedUser'
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -200,31 +676,192 @@ paths:
       - users
       security:
       - jwtAuth: []
-      - {}
       responses:
         '204':
           description: No response body
 components:
   schemas:
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        set:
+          $ref: '#/components/schemas/Set'
+        number:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          title: Номер гейма
+        score1:
+          allOf:
+          - $ref: '#/components/schemas/Score1Enum'
+          minimum: 0
+          maximum: 9223372036854775807
+        score2:
+          allOf:
+          - $ref: '#/components/schemas/Score2Enum'
+          minimum: 0
+          maximum: 9223372036854775807
+      required:
+      - id
+      - number
+      - set
+    Match:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        tournament:
+          type: string
+          readOnly: true
+        player1:
+          $ref: '#/components/schemas/Player'
+        player2:
+          $ref: '#/components/schemas/Player'
+        winner:
+          allOf:
+          - $ref: '#/components/schemas/Player'
+          nullable: true
+        match_date:
+          type: string
+          format: date-time
+          nullable: true
+        round_number:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+      required:
+      - id
+      - player1
+      - player2
+      - round_number
+      - tournament
+      - winner
+    PatchedPlayer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        rank:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        birth_date:
+          type: string
+          format: date
+          nullable: true
     PatchedUser:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        name:
+        username:
           type: string
-          maxLength: 255
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
         email:
           type: string
           format: email
+          title: Email address
           maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
         is_player:
           type: boolean
-          default: false
-        password:
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        rank:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        bio:
           type: string
-          writeOnly: true
+          nullable: true
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - id
+      - user
+    Score1Enum:
+      enum:
+      - 0
+      - 15
+      - 30
+      - 40
+      type: integer
+      description: |-
+        * `0` - 0
+        * `15` - 15
+        * `30` - 30
+        * `40` - 40
+    Score2Enum:
+      enum:
+      - 0
+      - 15
+      - 30
+      - 40
+      type: integer
+      description: |-
+        * `0` - 0
+        * `15` - 15
+        * `30` - 30
+        * `40` - 40
+    Set:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        match:
+          $ref: '#/components/schemas/Match'
+        winner:
+          type: integer
+          nullable: true
+          title: Победитель
+        number:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          title: Номер сета
+      required:
+      - id
+      - match
+      - number
     TokenObtainPair:
       type: object
       properties:
@@ -257,7 +894,7 @@ components:
       required:
       - access
       - refresh
-    User:
+    Tournament:
       type: object
       properties:
         id:
@@ -265,22 +902,82 @@ components:
           readOnly: true
         name:
           type: string
-          maxLength: 255
+          maxLength: 100
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        location:
+          type: string
+          nullable: true
+          maxLength: 100
+        is_active:
+          type: boolean
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+        matches:
+          type: array
+          items:
+            $ref: '#/components/schemas/Match'
+      required:
+      - end_date
+      - id
+      - matches
+      - name
+      - players
+      - start_date
+    TournamentParticipation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        player:
+          $ref: '#/components/schemas/Player'
+        tournament:
+          type: integer
+        seed:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+      required:
+      - id
+      - player
+      - tournament
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
         email:
           type: string
           format: email
+          title: Email address
           maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
         is_player:
           type: boolean
-          default: false
-        password:
-          type: string
-          writeOnly: true
       required:
-      - email
       - id
-      - name
-      - password
+      - username
   securitySchemes:
     jwtAuth:
       type: http

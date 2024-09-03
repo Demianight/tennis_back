@@ -8,7 +8,11 @@ from .serializers import (
 
 
 class TournamentViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Tournament.objects.all()
+    queryset = Tournament.objects.all().prefetch_related(
+        "matches",
+        "matches__player1",
+        "matches__player2",
+    )
     serializer_class = TournamentSerializer
 
 
